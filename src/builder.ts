@@ -54,97 +54,97 @@ export type BuilderData = {
 }
 
 export class Builder {
-  private readonly data: BuilderData
-  private rootStep: RootStep
+	private readonly data: BuilderData
+	private rootStep: RootStep
 
-  constructor(database: Database, option?: BuilderOption) {
-    this.data = {
-      database: database,
-      fromItemInfos: [],
-      sqlPath: undefined,
-      selectItemInfos: [],
-      distinct: undefined,
-      whereParts: [],
-      groupByItems: [],
-      havingParts: [],
-      orderByItemInfos: [],
-      insertIntoTable: undefined,
-      insertIntoColumns: [],
-      insertIntoValues: [],
-      insertIntoDefaultValues: false,
-      updateTable: undefined,
-      updateSetItemInfos: [],
-      returning: [],
-      binderStore: new BinderStore(),
-      option: fillUndefinedOptionsWithDefault(option ?? {}),
-    }
-    this.rootStep = new Step(this.data)
-  }
+	constructor(database: Database, option?: BuilderOption) {
+		this.data = {
+			database: database,
+			fromItemInfos: [],
+			sqlPath: undefined,
+			selectItemInfos: [],
+			distinct: undefined,
+			whereParts: [],
+			groupByItems: [],
+			havingParts: [],
+			orderByItemInfos: [],
+			insertIntoTable: undefined,
+			insertIntoColumns: [],
+			insertIntoValues: [],
+			insertIntoDefaultValues: false,
+			updateTable: undefined,
+			updateSetItemInfos: [],
+			returning: [],
+			binderStore: new BinderStore(),
+			option: fillUndefinedOptionsWithDefault(option ?? {}),
+		}
+		this.rootStep = new Step(this.data)
+	}
 
-  public select(distinct: Distinct|All, ...items: (ItemInfo|SelectItem|PrimitiveType)[]): SelectStep
-  public select(...items: (ItemInfo|SelectItem|PrimitiveType)[]): SelectStep
-  public select(...items: (Distinct|All|ItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
-    if (items[0] instanceof Distinct) {
-      if (items.length <= 1) throw new Error('Select step must have at least one parameter after DISTINCT')
-      items.shift() //remove first item the DISTINCT item
-      Builder.throwIfMoreThanOneDistinctOrAll(items)
-      const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
-      return this.rootStep.selectDistinct(...newItems)
-    }
+	public select(distinct: Distinct|All, ...items: (ItemInfo|SelectItem|PrimitiveType)[]): SelectStep
+	public select(...items: (ItemInfo|SelectItem|PrimitiveType)[]): SelectStep
+	public select(...items: (Distinct|All|ItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
+		if (items[0] instanceof Distinct) {
+			if (items.length <= 1) throw new Error('Select step must have at least one parameter after DISTINCT')
+			items.shift() //remove first item the DISTINCT item
+			Builder.throwIfMoreThanOneDistinctOrAll(items)
+			const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
+			return this.rootStep.selectDistinct(...newItems)
+		}
 
-    if (items[0] instanceof All) {
-      items.shift() //remove first item the ALL item
-      Builder.throwIfMoreThanOneDistinctOrAll(items)
-      const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
-      return this.rootStep.selectAll(...newItems)
-    }
+		if (items[0] instanceof All) {
+			items.shift() //remove first item the ALL item
+			Builder.throwIfMoreThanOneDistinctOrAll(items)
+			const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
+			return this.rootStep.selectAll(...newItems)
+		}
 
-    Builder.throwIfMoreThanOneDistinctOrAll(items)
-    const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
-    return this.rootStep.select(...newItems)
-  }
+		Builder.throwIfMoreThanOneDistinctOrAll(items)
+		const newItems = items as (SelectItemInfo|SelectItem|PrimitiveType)[]
+		return this.rootStep.select(...newItems)
+	}
 
-  public selectDistinct(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
-    return this.rootStep.selectDistinct(...items)
-  }
+	public selectDistinct(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
+		return this.rootStep.selectDistinct(...items)
+	}
 
-  public selectAll(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
-    return this.rootStep.selectAll(...items)
-  }
+	public selectAll(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
+		return this.rootStep.selectAll(...items)
+	}
 
-  public selectAsteriskFrom(...tables: (Table|AliasedTable)[]): SelectFromStep {
-    return this.rootStep.select(ASTERISK).from(...tables)
-  }
+	public selectAsteriskFrom(...tables: (Table|AliasedTable)[]): SelectFromStep {
+		return this.rootStep.select(ASTERISK).from(...tables)
+	}
 
-  public delete(): DeleteStep {
-    return this.rootStep.delete()
-  }
+	public delete(): DeleteStep {
+		return this.rootStep.delete()
+	}
 
-  public deleteFrom(table: Table|AliasedTable): DeleteFromStep {
-    return this.rootStep.delete().from(table)
-  }
+	public deleteFrom(table: Table|AliasedTable): DeleteFromStep {
+		return this.rootStep.delete().from(table)
+	}
 
-  public insert(): InsertStep {
-    return this.rootStep.insert()
-  }
+	public insert(): InsertStep {
+		return this.rootStep.insert()
+	}
 
-  public insertInto(table: Table, ...columns: Column[]): IntoStep {
-    return this.rootStep.insert().into(table, ...columns)
-  }
+	public insertInto(table: Table, ...columns: Column[]): IntoStep {
+		return this.rootStep.insert().into(table, ...columns)
+	}
 
-  public update(table: Table): UpdateStep {
-    return this.rootStep.update(table)
-  }
+	public update(table: Table): UpdateStep {
+		return this.rootStep.update(table)
+	}
 
-  public cleanUp(): Builder {
-    this.rootStep.cleanUp()
-    return this
-  }
+	public cleanUp(): Builder {
+		this.rootStep.cleanUp()
+		return this
+	}
 
-  private static throwIfMoreThanOneDistinctOrAll(items: (Distinct|All|ItemInfo|SelectItem|PrimitiveType)[]) {
-    items.forEach(it => {
-      if (it instanceof Distinct || it instanceof All)
-        throw new MoreThanOneDistinctOrAllError('You can not have more than one DISTINCT or ALL')
-    })
-  }
+	private static throwIfMoreThanOneDistinctOrAll(items: (Distinct|All|ItemInfo|SelectItem|PrimitiveType)[]) {
+		items.forEach(it => {
+			if (it instanceof Distinct || it instanceof All)
+				throw new MoreThanOneDistinctOrAllError('You can not have more than one DISTINCT or ALL')
+		})
+	}
 }

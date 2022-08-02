@@ -5,11 +5,11 @@ import { DeleteFromStep } from './DeleteFromStep'
 import { FromItemRelation } from '../FromItemInfo'
 
 export class DeleteStep extends BaseStep {
-  constructor(protected data: BuilderData) { super(data) }
+	constructor(protected data: BuilderData) { super(data) }
 
-  public from(table: Table|AliasedTable): DeleteFromStep {
-    this.throwIfTableNotInDb(BaseStep.getTable(table))
-    this.addFromItemInfo(table, FromItemRelation.NO_RELATION)
-    return new DeleteFromStep(this.data)
-  }
+	public from(table: Table|AliasedTable): DeleteFromStep {
+		this.throwIfTableNotInDb(BaseStep.getTable(table))
+		this.addFromItemInfo(table, FromItemRelation.NO_RELATION)
+		return new DeleteFromStep(this.data)
+	}
 }

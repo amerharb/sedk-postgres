@@ -1,5 +1,5 @@
 import { BuilderData } from '../builder'
 
 export interface IStatementGiver {
-  getStmt(data: BuilderData): string
+	getStmt(data: BuilderData): string
 }

@@ -19,49 +19,49 @@ import { UpdateSetItemInfo } from '../UpdateSetItemInfo'
 import { SetStep } from './SetStep'
 
 export interface RootStep extends BaseStep {
-  select(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
+	select(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
 
-  selectDistinct(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
+	selectDistinct(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
 
-  selectAll(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
+	selectAll(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep
 
-  delete(): DeleteStep
+	delete(): DeleteStep
 
-  insert(): InsertStep
+	insert(): InsertStep
 
-  update(table: Table): UpdateStep
+	update(table: Table): UpdateStep
 }
 
 export interface SelectStep extends BaseStep {
-  from(...tables: (Table|AliasedTable)[]): SelectFromStep
+	from(...tables: (Table|AliasedTable)[]): SelectFromStep
 
-  returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
+	returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
 }
 
 export interface IAfterFromSteps extends BaseStep, OrderByStep {
-  crossJoin(table: Table): CrossJoinStep
+	crossJoin(table: Table): CrossJoinStep
 
-  join(table: Table): JoinStep
+	join(table: Table): JoinStep
 
-  leftJoin(table: Table): LeftJoinStep
+	leftJoin(table: Table): LeftJoinStep
 
-  rightJoin(table: Table): RightJoinStep
+	rightJoin(table: Table): RightJoinStep
 
-  innerJoin(table: Table): InnerJoinStep
+	innerJoin(table: Table): InnerJoinStep
 
-  fullOuterJoin(table: Table): FullOuterJoinStep
+	fullOuterJoin(table: Table): FullOuterJoinStep
 
-  where(condition: Condition): SelectWhereStep
+	where(condition: Condition): SelectWhereStep
 
-  where(left: Condition, operator: LogicalOperator, right: Condition): SelectWhereStep
+	where(left: Condition, operator: LogicalOperator, right: Condition): SelectWhereStep
 
-  where(left: Condition, operator1: LogicalOperator, middle: Condition, operator2: LogicalOperator, right: Condition): SelectWhereStep
+	where(left: Condition, operator1: LogicalOperator, middle: Condition, operator2: LogicalOperator, right: Condition): SelectWhereStep
 
-  groupBy(...groupByItems: Column[]): GroupByStep
+	groupBy(...groupByItems: Column[]): GroupByStep
 
-  orderBy(...orderByItems: OrderByArgsElement[]): OrderByStep
+	orderBy(...orderByItems: OrderByArgsElement[]): OrderByStep
 
-  returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
+	returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
 }
 
 export interface SelectFromStep extends BaseStep, IAfterFromSteps {}
@@ -69,7 +69,7 @@ export interface SelectFromStep extends BaseStep, IAfterFromSteps {}
 export interface CrossJoinStep extends BaseStep, IAfterFromSteps {}
 
 interface IJoinStep extends BaseStep {
-  on(condition: Condition): OnStep
+	on(condition: Condition): OnStep
 }
 
 export interface JoinStep extends IJoinStep {}
@@ -91,13 +91,13 @@ export interface SelectWhereOrStep extends SelectWhereStep {}
 export interface SelectWhereAndStep extends SelectWhereStep {}
 
 export interface GroupByStep extends BaseStep, OrderByStep {
-  having(condition: Condition): HavingStep
+	having(condition: Condition): HavingStep
 
-  having(left: Condition, operator: LogicalOperator, right: Condition): HavingStep
+	having(left: Condition, operator: LogicalOperator, right: Condition): HavingStep
 
-  having(left: Condition, operator1: LogicalOperator, middle: Condition, operator2: LogicalOperator, right: Condition): HavingStep
+	having(left: Condition, operator1: LogicalOperator, middle: Condition, operator2: LogicalOperator, right: Condition): HavingStep
 
-  orderBy(...orderByItems: OrderByArgsElement[]): OrderByStep
+	orderBy(...orderByItems: OrderByArgsElement[]): OrderByStep
 }
 
 export interface HavingOrStep extends HavingStep {}
@@ -105,31 +105,31 @@ export interface HavingOrStep extends HavingStep {}
 export interface HavingAndStep extends HavingStep {}
 
 export interface OrderByStep extends BaseStep, LimitStep {
-  limit(n: null|number|All): LimitStep
+	limit(n: null|number|All): LimitStep
 
-  limit$(n: null|number): LimitStep
+	limit$(n: null|number): LimitStep
 }
 
 export interface LimitStep extends BaseStep, OffsetStep {
-  offset(n: number): OffsetStep
+	offset(n: number): OffsetStep
 
-  offset$(n: number): OffsetStep
+	offset$(n: number): OffsetStep
 }
 
 export interface OffsetStep extends BaseStep {
-  returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
+	returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
 }
 
 export interface ReturningStep extends BaseStep {}
 
 export interface ValuesStep extends BaseStep {
-  returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
+	returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
 }
 
 export interface DefaultValuesStep extends BaseStep {
-  returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
+	returning(...items: (ItemInfo|ReturningItem|PrimitiveType)[]): ReturningStep
 }
 
 export interface UpdateStep extends BaseStep {
-  set(...items: UpdateSetItemInfo[]): SetStep
+	set(...items: UpdateSetItemInfo[]): SetStep
 }

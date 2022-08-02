@@ -11,41 +11,41 @@ import { SelectItem } from './Step'
 import { Default } from '../singletoneConstants'
 
 export class IntoStep extends BaseStep {
-  constructor(protected data: BuilderData) { super(data) }
+	constructor(protected data: BuilderData) { super(data) }
 
-  public values(...values: (PrimitiveType|Binder|Default)[]): ValuesStep {
-    this.throwForInvalidValuesNumber(values)
-    this.data.insertIntoValues.push(...values)
-    return returnStepOrThrow(this.data.step)
-  }
+	public values(...values: (PrimitiveType|Binder|Default)[]): ValuesStep {
+		this.throwForInvalidValuesNumber(values)
+		this.data.insertIntoValues.push(...values)
+		return returnStepOrThrow(this.data.step)
+	}
 
-  public values$(...values: PrimitiveType[]): ValuesStep {
-    this.throwForInvalidValuesNumber(values)
-    this.data.insertIntoValues.push(...values.map(it => new Binder(it)))
-    return returnStepOrThrow(this.data.step)
-  }
+	public values$(...values: PrimitiveType[]): ValuesStep {
+		this.throwForInvalidValuesNumber(values)
+		this.data.insertIntoValues.push(...values.map(it => new Binder(it)))
+		return returnStepOrThrow(this.data.step)
+	}
 
-  public defaultValues(): DefaultValuesStep {
-    this.data.insertIntoDefaultValues = true
-    return returnStepOrThrow(this.data.step)
-  }
+	public defaultValues(): DefaultValuesStep {
+		this.data.insertIntoDefaultValues = true
+		return returnStepOrThrow(this.data.step)
+	}
 
-  public select(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
-    this.throwForInvalidExpressionsNumber(items)
-    return returnStepOrThrow(this.data.step).select(...items)
-  }
+	public select(...items: (SelectItemInfo|SelectItem|PrimitiveType)[]): SelectStep {
+		this.throwForInvalidExpressionsNumber(items)
+		return returnStepOrThrow(this.data.step).select(...items)
+	}
 
-  private throwForInvalidValuesNumber(values: (PrimitiveType|Binder|Default)[]) {
-    const columnsCount = this.data.insertIntoColumns.length
-    if (columnsCount > 0 && columnsCount !== values.length) {
-      throw new InsertColumnsAndValuesNotEqualError(columnsCount, values.length)
-    }
-  }
+	private throwForInvalidValuesNumber(values: (PrimitiveType|Binder|Default)[]) {
+		const columnsCount = this.data.insertIntoColumns.length
+		if (columnsCount > 0 && columnsCount !== values.length) {
+			throw new InsertColumnsAndValuesNotEqualError(columnsCount, values.length)
+		}
+	}
 
-  private throwForInvalidExpressionsNumber(items: (SelectItemInfo|SelectItem|PrimitiveType)[]) {
-    const columnsCount = this.data.insertIntoColumns.length
-    if (columnsCount > 0 && columnsCount !== items.length) {
-      throw new InsertColumnsAndExpressionsNotEqualError(columnsCount, items.length)
-    }
-  }
+	private throwForInvalidExpressionsNumber(items: (SelectItemInfo|SelectItem|PrimitiveType)[]) {
+		const columnsCount = this.data.insertIntoColumns.length
+		if (columnsCount > 0 && columnsCount !== items.length) {
+			throw new InsertColumnsAndExpressionsNotEqualError(columnsCount, items.length)
+		}
+	}
 }

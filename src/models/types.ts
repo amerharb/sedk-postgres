@@ -18,15 +18,15 @@ export type ValueType = null|ValueLike
 export type OperandType = ValueType|AggregateFunction|Expression
 
 export function isTextBoolean(text: unknown): text is TextBoolean {
-  if (typeof text === 'string')
-    return booleanArray.includes(text.toLowerCase())
-  return false
+	if (typeof text === 'string')
+		return booleanArray.includes(text.toLowerCase())
+	return false
 }
 
 export function isTextNumber(text: unknown): text is number {
-  if (typeof text === 'string') {
-    const numberRegex = /^-?[0-9]+(\.[0-9]+)?$/
-    return numberRegex.test(text)
-  }
-  return false
+	if (typeof text === 'string') {
+		const numberRegex = /^-?[0-9]+(\.[0-9]+)?$/
+		return numberRegex.test(text)
+	}
+	return false
 }

@@ -16,7 +16,7 @@ module.exports = {
     {
       files: ['src/**/*.ts', 'test/**/*.ts'],
       rules: {
-        'indent': ['error', 2],
+        'indent': ['error', 'tab'],
         'linebreak-style': ['error', 'unix'],
         'quotes': ['warn', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
         'semi': ['warn', 'never'],

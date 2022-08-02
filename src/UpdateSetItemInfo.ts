@@ -8,24 +8,24 @@ import { Operand } from './models/Operand'
 import { Default } from './singletoneConstants'
 
 export class UpdateSetItemInfo implements IStatementGiver {
-  public readonly operand: Operand|Default
+	public readonly operand: Operand|Default
 
-  constructor(
+	constructor(
     public readonly column: Column,
     value: PrimitiveType|Binder|Expression|Default,
-  ) {
-    if (value instanceof Default) {
-      this.operand = value
-    } else {
-      this.operand = new Operand(value)
-    }
-  }
+	) {
+		if (value instanceof Default) {
+			this.operand = value
+		} else {
+			this.operand = new Operand(value)
+		}
+	}
 
-  public getColumns(): Column[] {
-    return [this.column]
-  }
+	public getColumns(): Column[] {
+		return [this.column]
+	}
 
-  public getStmt(data: BuilderData): string {
-    return `${this.column.getStmt(data)} = ${this.operand.getStmt(data)}`
-  }
+	public getStmt(data: BuilderData): string {
+		return `${this.column.getStmt(data)} = ${this.operand.getStmt(data)}`
+	}
 }
